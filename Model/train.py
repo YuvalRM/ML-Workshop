@@ -75,10 +75,10 @@ if __name__ == "__main__":
 
         # Track best performance, and save the model's state
         if avg_vloss < best_vloss:
-            print(f"saving data to {model_module.save_state_dict}")
+            print(f"saving data to {deepsea_model.save_state_dict}")
             best_vloss = avg_vloss
             model_path = 'model_{}_{}'.format(timestamp, epoch_number)
-            torch.save(model.state_dict(), model_module.save_state_dict)
+            torch.save(model.state_dict(), deepsea_model.save_state_dict)
 
         epoch_number += 1
 

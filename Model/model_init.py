@@ -1,6 +1,6 @@
 import torch
 import numpy as np
-import model
+import deepsea_model
 from torch.utils.data import Dataset, DataLoader, TensorDataset
 
 # hyper parameters
@@ -58,7 +58,7 @@ test_loader = DataLoader(test_dataset, batch_size=batch_size)
 
 loss_fn = torch.nn.BCELoss()
 
-model = model_module.get_seqpred_model(load_weights=True)
+model = deepsea_model.get_seqpred_model(load_weights=True)
 model.to(device)
 optimizer = torch.optim.SGD(model.parameters(), lr=0.08, momentum=0.9)
 
