@@ -1,6 +1,6 @@
 import torch
 import numpy as np
-import model_module
+import model
 from torch.utils.data import Dataset, DataLoader, TensorDataset
 
 # hyper parameters

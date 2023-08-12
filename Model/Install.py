@@ -14,7 +14,3 @@ os.system(cmd)
 dir="./model_files"
 if not os.path.exists(dir):
     os.mkdir(dir)
-
-
-cmd = 'python3 train.py'
-os.system(cmd)
