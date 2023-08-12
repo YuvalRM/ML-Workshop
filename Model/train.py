@@ -1,4 +1,4 @@
-from create_clean_model import *
+from model_init import *
 import datetime
 from datetime import datetime
 
