@@ -55,8 +55,8 @@ tfmodisco_results = modisco.tfmodisco_workflow.workflow.TfModiscoWorkflow(
                         n_cores=10)
                 )(
                  task_names=['task'],
-                 contrib_scores=IntegratedGradients.calc_IG()[1],
-                 hypothetical_contribs=IntegratedGradients.calc_IG()[1],
-                 one_hot=IntegratedGradients.calc_IG()[0],
+                 contrib_scores=IntegratedGradients.calc_IG_mult_samples()[1],
+                 hypothetical_contribs=IntegratedGradients.calc_IG_mult_samples()[1],
+                 one_hot=IntegratedGradients.calc_IG_mult_samples()[0],
                  null_per_pos_scores=null_per_pos_scores)
 
