@@ -4,7 +4,6 @@ import numpy as np
 
 
 def calc_hypo_on_data(data):
-
     def split_list(a_list, number_of_splits):
         step = len(a_list) // number_of_splits + (1 if len(a_list) % number_of_splits else 0)
         return [a_list[i * step:(i + 1) * step] for i in range(number_of_splits)]
@@ -12,26 +11,26 @@ def calc_hypo_on_data(data):
     def onehot_dinuc_shuffle(s):
         s = np.squeeze(s)
         argmax_vals = "".join([str(x) for x in np.argmax(s, axis=-1)])
-        lst = [x for x in traverse_edges(argmax_vals, shuffle_edges(prepare_edges(argmax_vals)))]
+        shuffled_dataset_lst = [x for x in traverse_edges(argmax_vals, shuffle_edges(prepare_edges(argmax_vals)))]
         to_remove = [' ', '\n', '[', ']']
-        lst = [i for i in lst if i not in to_remove]
-        lst = [eval(i) for i in lst]
-        lst = split_list(lst, len(s))
-        to_return = np.zeros_like(s)
-        for seq_index in range(len(lst)):
-            for num_index in range(len(lst[seq_index])):
-                if lst[seq_index][num_index] == 0:
-                    to_return[seq_index][num_index][0] = 1.
-                if lst[seq_index][num_index] == 1:
-                    to_return[seq_index][num_index][1] = 1.
-                if lst[seq_index][num_index] == 2:
-                    to_return[seq_index][num_index][2] = 1.
-                if lst[seq_index][num_index] == 3:
-                    to_return[seq_index][num_index][3] = 1.
-        return to_return
+        shuffled_dataset_lst = [i for i in shuffled_dataset_lst if i not in to_remove]
+        shuffled_dataset_lst = [eval(i) for i in shuffled_dataset_lst]
+        shuffled_dataset_lst = split_list(shuffled_dataset_lst, len(s))
+        hypo_shuffled_dataset = np.zeros_like(s)
+        for seq_index in range(len(shuffled_dataset_lst)):
+            for num_index in range(len(shuffled_dataset_lst[seq_index])):
+                if shuffled_dataset_lst[seq_index][num_index] == 0:
+                    hypo_shuffled_dataset[seq_index][num_index][0] = 1.
+                if shuffled_dataset_lst[seq_index][num_index] == 1:
+                    hypo_shuffled_dataset[seq_index][num_index][1] = 1.
+                if shuffled_dataset_lst[seq_index][num_index] == 2:
+                    hypo_shuffled_dataset[seq_index][num_index][2] = 1.
+                if shuffled_dataset_lst[seq_index][num_index] == 3:
+                    hypo_shuffled_dataset[seq_index][num_index][3] = 1.
+        return hypo_shuffled_dataset
 
     s = data
-    new_s = onehot_dinuc_shuffle(s)
-    new_s = np.transpose(new_s, (0, 2, 1))
-    new_s = np.expand_dims(new_s, axis=2)
-    return new_s
+    hypo_dataset = onehot_dinuc_shuffle(s)
+    hypo_dataset = np.transpose(hypo_dataset, (0, 2, 1))
+    hypo_dataset = np.expand_dims(hypo_dataset, axis=2)
+    return hypo_dataset
