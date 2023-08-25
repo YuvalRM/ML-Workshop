@@ -1,20 +1,20 @@
+# this script calculated TF-MoDisco results
 import h5py
 import numpy as np
-# %matplotlib inline
 import modisco
 import IntegratedGradients
 import modisco.visualization
 from modisco.visualization import viz_sequence
+from importlib import reload
 
-# this part shows visualization of the data
-# viz_sequence.plot_weights(IntegratedGradients.calc_IG()[1]['task'][0], subticks_frequency=20)
-# viz_sequence.plot_weights(IntegratedGradients.calc_IG()[0][0], subticks_frequency=20)
+# this part shows visualization of the input data
+viz_sequence.plot_weights(IntegratedGradients.calc_IG(0)[1]['task'][0], subticks_frequency=20) # uncomment to show scores visualization
+viz_sequence.plot_weights(IntegratedGradients.calc_IG(0)[0][0], subticks_frequency=20) # uncomment to show input visualization
 
 
-# the following part calculates tf_modisco results
+# the following part calculates TF_MoDisco results
 
 #Uncomment to refresh modules for when tweaking code during development:
-from importlib import reload
 reload(modisco.util)
 reload(modisco.pattern_filterer)
 reload(modisco.aggregator)
@@ -55,7 +55,7 @@ tfmodisco_results = modisco.tfmodisco_workflow.workflow.TfModiscoWorkflow(
                         n_cores=10)
                 )(
                  task_names=['task'],
-                 contrib_scores=IntegratedGradients.calc_IG_mult_samples()[1],
+                 contrib_scores=IntegratedGradients.calc_IG_mult_samples()[1], # can be changed to use different functions of IntegratedGradients
                  hypothetical_contribs=IntegratedGradients.calc_IG_mult_samples()[1],
                  one_hot=IntegratedGradients.calc_IG_mult_samples()[0],
                  null_per_pos_scores=null_per_pos_scores)
